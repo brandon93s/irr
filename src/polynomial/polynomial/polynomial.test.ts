@@ -30,6 +30,12 @@ describe('Polynomial', () => {
         })
       })
     })
+
+    test('does not return NaN for sparse high-degree polynomials', () => {
+      const polynomial = new Polynomial([1, ...Array(1024).fill(0), -1])
+
+      expect(Number.isNaN(polynomial.calculate(2))).toBe(false)
+    })
   })
   describe('#differenciate', () => {
     const cases = [

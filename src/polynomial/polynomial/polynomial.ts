@@ -12,13 +12,23 @@ export class Polynomial implements IPolynomial {
   }
 
   public calculate(x: number): number {
-    const degree = this.getDegree()
-    let accumulatedX: number = 1
+    if (this.coefficients.length <= 1024) {
+      const degree = this.getDegree()
+      let accumulatedX: number = 1
+      let result: number = 0
+
+      for (let index = degree; index >= 0; index--) {
+        result += accumulatedX * this.coefficients[index]
+        accumulatedX *= x
+      }
+
+      return result
+    }
+
     let result: number = 0
 
-    for (let index = degree; index >= 0; index--) {
-      result += accumulatedX * this.coefficients[index]
-      accumulatedX *= x
+    for (let index = 0; index < this.coefficients.length; index++) {
+      result = result * x + this.coefficients[index]
     }
 
     return result
